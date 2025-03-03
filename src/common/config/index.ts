@@ -15,5 +15,11 @@ export const Config = {
         IS_LOCAL: process.env.NODE_ENV === 'local',
         IS_TEST: process.env.NODE_ENV === 'test',
     },
-    Database: {},
+    Database: {
+        HOST: process.env.PGSQL_HOST,
+        PORT: +process.env.PGSQL_PORT || 5432,
+        USERNAME: process.env.PGSQL_USERNAME,
+        PASSWORD: process.env.PGSQL_PASSWORD,
+        DATABASE: process.env.PGSQL_DATABASE || 'weather_app',
+    },
 };
