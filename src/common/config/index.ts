@@ -22,4 +22,9 @@ export const Config = {
         PASSWORD: process.env.PGSQL_PASSWORD,
         DATABASE: process.env.PGSQL_DATABASE || 'weather_app',
     },
+    OpenWeatherMap: {
+        GEOCODING_API_URL: process.env.OPENWEATHERMAP_GEOCODING_API_URL,
+        API_URL: process.env.OPENWEATHERMAP_API_URL,
+        API_KEY: process.env.OPENWEATHERMAP_API_KEY,
+    },
 };

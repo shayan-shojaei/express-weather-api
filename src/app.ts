@@ -1,6 +1,7 @@
 import { Config } from '@common/config';
 import { Database } from '@common/database';
-import { WeatherController } from '@domains/weather/weather.controller';
+import { errorHandler } from '@common/middlewares';
+import { WeatherController } from '@domains/weatherCore/weather/weather.controller';
 import express from 'express';
 
 const startServer = async () => {
@@ -12,9 +13,13 @@ const startServer = async () => {
 
     // Middlewares
     app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
     // Routes
     app.use('/weather', WeatherController());
+
+    // Error handler
+    app.use(errorHandler);
 
     // Start server
     app.listen(Config.Server.PORT, async (error?: Error) => {
