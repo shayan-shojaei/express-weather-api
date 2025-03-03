@@ -1,3 +1,4 @@
+import { WeatherInfo } from '@domains/weatherCore/weatherProvider';
 import {
     Column,
     CreateDateColumn,
@@ -29,16 +30,36 @@ export class Weather {
     @Column({ name: 'wind_speed', type: 'float' })
     windSpeed: number;
 
-    @CreateDateColumn({ name: 'fetched_at' })
+    @Column({ name: 'fetched_at', type: 'timestamp' })
     fetchedAt: Date;
 
     @CreateDateColumn({
         name: 'created_at',
-        type: 'timestamp',
-        default: () => 'CURRENT_TIMESTAMP',
     })
     createdAt: Date;
 
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt?: Date;
+
+    constructor(data: Partial<Weather>) {
+        if (data) {
+            Object.assign(this, data);
+        }
+    }
+
+    static fromWeatherInfo(
+        country: string,
+        cityName: string,
+        weatherInfo: WeatherInfo,
+    ): Weather {
+        return new Weather({
+            cityName: cityName,
+            country: country,
+            description: weatherInfo.weather[0].description,
+            temperature: weatherInfo.main.temp,
+            humidity: weatherInfo.main.humidity,
+            windSpeed: weatherInfo.wind.speed,
+            fetchedAt: new Date(),
+        });
+    }
 }
