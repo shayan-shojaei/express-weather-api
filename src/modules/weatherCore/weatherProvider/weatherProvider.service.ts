@@ -48,7 +48,7 @@ export class WeatherProviderService {
         }
 
         if (!cachedWeather) {
-            throw new NotFoundException('Weather not found');
+            throw new NotFoundException('Weather data not found');
         }
 
         return cachedWeather;

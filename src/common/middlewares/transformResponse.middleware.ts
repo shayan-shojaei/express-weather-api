@@ -6,7 +6,7 @@ export const transformResponse = (
     res: Response,
     next: NextFunction,
 ) => {
-    res.transformAndSend = function <T>(data: T, cls: ClassConstructor<T>) {
+    res.transformAndSend = function <T>(data: any, cls: ClassConstructor<T>) {
         data = plainToInstance(cls, data);
 
         res.send(data);

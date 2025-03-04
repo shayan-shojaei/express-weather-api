@@ -5,6 +5,7 @@ import {
     FetchWeatherDto,
     FindWeatherRecordsDto,
     UpdateWeatherRecordDto,
+    WeatherRecordDto,
 } from './dto';
 import { HttpStatus } from '@common/enums';
 
@@ -32,19 +33,27 @@ export const WeatherController = () => {
      *     responses:
      *       200:
      *         description: A list of weather records
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: array
+     *               items:
+     *                 $ref: '#/components/schemas/WeatherRecordDto'
      */
     router.get(
         '/',
         handleRoute(
-            async (req: Request, res: Response, next: NextFunction) => {
-                const findWeatherRecordsDto =
-                    req.query as FindWeatherRecordsDto;
+            async (req, res) => {
+                const findWeatherRecordsDto = req.query;
 
                 const weatherRecords = await weatherService.findAll(
                     findWeatherRecordsDto,
                 );
 
-                res.status(HttpStatus.OK).send(weatherRecords);
+                res.status(HttpStatus.OK).transformAndSend(
+                    weatherRecords,
+                    WeatherRecordDto,
+                );
             },
             {
                 query: FindWeatherRecordsDto,
@@ -69,15 +78,24 @@ export const WeatherController = () => {
      *     responses:
      *       200:
      *         description: The weather record with the given ID
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/WeatherRecordDto'
+     *       404:
+     *         description: Weather record not found
      */
     router.get(
         '/:id',
-        handleRoute(async (req: Request, res: Response, next: NextFunction) => {
+        handleRoute(async (req, res) => {
             const id = req.params.id;
 
             const weatherRecord = await weatherService.findOneById(id);
 
-            res.status(HttpStatus.OK).send(weatherRecord);
+            res.status(HttpStatus.OK).transformAndSend(
+                weatherRecord,
+                WeatherRecordDto,
+            );
         }),
     );
 
@@ -98,16 +116,25 @@ export const WeatherController = () => {
      *     responses:
      *       200:
      *         description: The latest weather record with the given city name
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/WeatherRecordDto'
+     *       404:
+     *         description: Weather record not found
      */
     router.get(
         '/latest/:cityName',
-        handleRoute(async (req: Request, res: Response, next: NextFunction) => {
+        handleRoute(async (req, res) => {
             const cityName = req.params.cityName;
 
             const weatherRecord =
                 await weatherService.findLatestByCityName(cityName);
 
-            res.status(HttpStatus.OK).send(weatherRecord);
+            res.status(HttpStatus.OK).transformAndSend(
+                weatherRecord,
+                WeatherRecordDto,
+            );
         }),
     );
 
@@ -127,12 +154,20 @@ export const WeatherController = () => {
      *     responses:
      *       201:
      *         description: The weather record that was saved
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/WeatherRecordDto'
+     *       400:
+     *         description: Location not found
+     *       404:
+     *         description: Weather data not found
      */
     router.post(
         '/',
         handleRoute(
-            async (req: Request, res: Response, next: NextFunction) => {
-                const fetchWeatherDto = req.body as FetchWeatherDto;
+            async (req, res) => {
+                const fetchWeatherDto = req.body;
 
                 const weather =
                     await weatherService.fetchWeather(fetchWeatherDto);
@@ -168,21 +203,29 @@ export const WeatherController = () => {
      *     responses:
      *       200:
      *         description: The updated weather record
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/WeatherRecordDto'
+     *       404:
+     *         description: Weather record not found
      */
     router.put(
         '/:id',
         handleRoute(
-            async (req: Request, res: Response, next: NextFunction) => {
+            async (req, res, next) => {
                 const id = req.params.id;
-                const updateWeatherRecordDto =
-                    req.body as UpdateWeatherRecordDto;
+                const updateWeatherRecordDto = req.body;
 
                 const updatedWeatherRecord = await weatherService.updateOneById(
                     id,
                     updateWeatherRecordDto,
                 );
 
-                res.status(HttpStatus.OK).send(updatedWeatherRecord);
+                res.status(HttpStatus.OK).transformAndSend(
+                    updatedWeatherRecord,
+                    WeatherRecordDto,
+                );
             },
             {
                 body: UpdateWeatherRecordDto,
@@ -207,6 +250,8 @@ export const WeatherController = () => {
      *     responses:
      *       204:
      *         description: The weather record was deleted
+     *       404:
+     *         description: Weather record not found
      */
     router.delete(
         '/:id',

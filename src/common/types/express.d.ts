@@ -5,7 +5,7 @@ declare global {
     namespace Express {
         interface Response {
             transformAndSend: <T extends object>(
-                data: T,
+                data: any,
                 cls: ClassConstructor<T>,
             ) => void;
         }

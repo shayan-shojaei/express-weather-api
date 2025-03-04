@@ -22,10 +22,18 @@ export const handleRoute = <
     BodyType extends object,
     QueryType extends object,
 >(
-    func: (req: Request, res: Response, next: NextFunction) => Promise<T>,
+    func: (
+        req: Request<any, any, BodyType, QueryType>,
+        res: Response,
+        next: NextFunction,
+    ) => Promise<T>,
     options?: HandleRouteOptions<BodyType, QueryType>,
 ) => {
-    return async (req: Request, res: Response, next: NextFunction) => {
+    return async (
+        req: Request<any, any, BodyType, QueryType>,
+        res: Response,
+        next: NextFunction,
+    ) => {
         try {
             // If options.body is defined, validate the request body
             if (options?.body) {
@@ -37,10 +45,10 @@ export const handleRoute = <
 
             // If options.query is defined, validate the request query
             if (options?.query) {
-                req.query = (await ValidationHelper.validate(
+                req.query = await ValidationHelper.validate(
                     req.query,
                     options.query,
-                )) as QueryParams;
+                );
             }
 
             await func(req, res, next);
