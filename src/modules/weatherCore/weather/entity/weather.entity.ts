@@ -54,14 +54,12 @@ export class Weather {
     }
 
     static fromWeatherInfo(
-        country: string,
-        cityName: string,
         weatherInfo: WeatherInfo,
         fetchedAt?: Date,
     ): Weather {
         return new Weather({
-            cityName: cityName,
-            country: country,
+            cityName: weatherInfo.name,
+            country: weatherInfo.sys.country,
             description: weatherInfo.weather[0].description,
             temperature: weatherInfo.main.temp,
             humidity: weatherInfo.main.humidity,

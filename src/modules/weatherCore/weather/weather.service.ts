@@ -60,8 +60,6 @@ export class WeatherService {
         );
 
         const weather = Weather.fromWeatherInfo(
-            fetchWeatherDto.country,
-            fetchWeatherDto.cityName,
             cachedWeather.weather,
             cachedWeather.date,
         );

@@ -1,5 +1,12 @@
+/**
+ * OpenWeatherMap API response type
+ */
 export type WeatherInfo = {
     cod: 200;
+    name: string;
+    sys: {
+        country: string;
+    };
     weather: {
         main: string;
         description: string;
