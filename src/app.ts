@@ -55,7 +55,7 @@ export const startServer = async () => {
     app.use(catchMissingRoutes);
 
     // Start server
-    app.listen(Config.Server.PORT, async (error?: Error) => {
+    const server = app.listen(Config.Server.PORT, async (error?: Error) => {
         if (error) {
             console.error('An error occurred:');
             console.error(error);
@@ -66,14 +66,19 @@ export const startServer = async () => {
     });
 
     // Shutdown hook
-    process.on('exit', async () => {
+    server.on('close', async () => {
         await Database.close();
         Cache.close();
     });
 
-    return app;
+    return server;
 };
 
 if (!Config.Environment.IS_TEST) {
     void startServer();
+
+    // process.on('exit', async () => {
+    //     await Database.close();
+    //     Cache.close();
+    // });
 }

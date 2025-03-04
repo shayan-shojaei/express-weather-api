@@ -1,4 +1,3 @@
-import { App } from 'supertest/types';
 import { startServer } from '@app/app';
 import request from 'supertest';
 import {
@@ -7,22 +6,48 @@ import {
     WeatherRecordDto,
 } from '@modules/weatherCore/weather/dto';
 import { HttpStatus } from '@common/enums';
+import { Server } from 'http';
 
 describe('Weather', () => {
-    let app: App;
+    let app: Server;
+
+    let token: string;
 
     beforeAll(async () => {
         app = await startServer();
+
+        const response = await request(app).post('/account/auth/login').send({
+            email: 'user@test.com',
+            password: 'Pass1234',
+        });
+
+        token = `Bearer ${response.body.token}`;
     });
 
+    afterAll(() => app.close());
+
     describe('POST /weather', () => {
+        it('should throw a 401 error if the user is not authenticated', async () => {
+            const body: FetchWeatherDto = {
+                cityName: 'London',
+                country: 'GB',
+            };
+
+            const response = await request(app).post('/weather').send(body);
+
+            expect(response.statusCode).toBe(HttpStatus.UNAUTHORIZED);
+        });
+
         it('should throw an error if the request body is empty', async () => {
             const body: FetchWeatherDto = {
                 cityName: undefined,
                 country: undefined,
             };
 
-            const response = await request(app).post('/weather').send(body);
+            const response = await request(app)
+                .post('/weather')
+                .send(body)
+                .set('authorization', token);
 
             expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
         });
@@ -36,7 +61,10 @@ describe('Weather', () => {
 
             const startTime = Date.now();
 
-            const response = await request(app).post('/weather').send(body);
+            const response = await request(app)
+                .post('/weather')
+                .send(body)
+                .set('authorization', token);
 
             initialResponseTime = Date.now() - startTime;
 
@@ -51,7 +79,10 @@ describe('Weather', () => {
 
             const startTime = Date.now();
 
-            const response = await request(app).post('/weather').send(body);
+            const response = await request(app)
+                .post('/weather')
+                .send(body)
+                .set('authorization', token);
 
             const responseTime = Date.now() - startTime;
 
@@ -112,7 +143,10 @@ describe('Weather', () => {
                 country: 'US',
             };
 
-            const response = await request(app).post('/weather').send(body);
+            const response = await request(app)
+                .post('/weather')
+                .send(body)
+                .set('authorization', token);
 
             weatherId = response.body.id;
         });
@@ -165,15 +199,27 @@ describe('Weather', () => {
                 country: 'FR',
             };
 
-            const response = await request(app).post('/weather').send(body);
+            const response = await request(app)
+                .post('/weather')
+                .send(body)
+                .set('authorization', token);
 
             weatherRecord = response.body;
+        });
+
+        it('should throw a 401 error if the user is not authenticated', async () => {
+            const response = await request(app)
+                .put(`/weather/${weatherRecord.id}`)
+                .send(updateBody);
+
+            expect(response.statusCode).toBe(HttpStatus.UNAUTHORIZED);
         });
 
         it('should throw a 400 error if the request body is empty', async () => {
             const response = await request(app)
                 .put(`/weather/${weatherRecord.id}`)
-                .send({});
+                .send({})
+                .set('authorization', token);
 
             expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
         });
@@ -181,7 +227,8 @@ describe('Weather', () => {
         it('should update a weather record by id', async () => {
             const response = await request(app)
                 .put(`/weather/${weatherRecord.id}`)
-                .send(updateBody);
+                .send(updateBody)
+                .set('authorization', token);
 
             expect(response.statusCode).toBe(HttpStatus.OK);
 
@@ -210,7 +257,8 @@ describe('Weather', () => {
 
             const response = await request(app)
                 .put(`/weather/${invalidId}`)
-                .send(updateBody);
+                .send(updateBody)
+                .set('authorization', token);
 
             expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
         });
@@ -220,7 +268,8 @@ describe('Weather', () => {
 
             const response = await request(app)
                 .put(`/weather/${nonExistingId}`)
-                .send(updateBody);
+                .send(updateBody)
+                .set('authorization', token);
 
             expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
         });
@@ -235,13 +284,24 @@ describe('Weather', () => {
                 country: 'JP',
             };
 
-            const response = await request(app).post('/weather').send(body);
+            const response = await request(app)
+                .post('/weather')
+                .send(body)
+                .set('authorization', token);
 
             weatherId = response.body.id;
         });
 
-        it('should delete a weather record by id', async () => {
+        it('should throw a 401 error if the user is not authenticated', async () => {
             const response = await request(app).delete(`/weather/${weatherId}`);
+
+            expect(response.statusCode).toBe(HttpStatus.UNAUTHORIZED);
+        });
+
+        it('should delete a weather record by id', async () => {
+            const response = await request(app)
+                .delete(`/weather/${weatherId}`)
+                .set('authorization', token);
 
             expect(response.statusCode).toBe(HttpStatus.NO_CONTENT);
 
