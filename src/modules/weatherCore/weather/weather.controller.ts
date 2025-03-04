@@ -43,6 +43,18 @@ export const WeatherController = () => {
         }),
     );
 
+    router.get(
+        '/latest/:cityName',
+        handleRoute(async (req: Request, res: Response, next: NextFunction) => {
+            const cityName = req.params.cityName;
+
+            const weatherRecord =
+                await weatherService.findLatestByCityName(cityName);
+
+            res.status(HttpStatus.OK).send(weatherRecord);
+        }),
+    );
+
     router.post(
         '/',
         handleRoute(

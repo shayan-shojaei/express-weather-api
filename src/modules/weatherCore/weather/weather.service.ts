@@ -8,7 +8,7 @@ import {
     UpdateWeatherRecordDto,
 } from './dto';
 import { isUUID } from 'class-validator';
-import { NotFoundException } from '@common/exceptions';
+import { BadRequestException, NotFoundException } from '@common/exceptions';
 
 export class WeatherService {
     constructor() {}
@@ -30,6 +30,21 @@ export class WeatherService {
         }
 
         const weatherRecord = await this.weatherRepository.findOneById(id);
+
+        if (!weatherRecord) {
+            throw new NotFoundException();
+        }
+
+        return weatherRecord;
+    }
+
+    async findLatestByCityName(cityName: string): Promise<Weather> {
+        if (!cityName) {
+            throw new BadRequestException('City name is required');
+        }
+
+        const weatherRecord =
+            await this.weatherRepository.findLatestByCityName(cityName);
 
         if (!weatherRecord) {
             throw new NotFoundException();

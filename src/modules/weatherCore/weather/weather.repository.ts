@@ -20,6 +20,17 @@ export class WeatherRepository {
         return this.repository.findOneBy({ id: id });
     }
 
+    async findLatestByCityName(cityName: string): Promise<Weather> {
+        return this.repository.findOne({
+            where: {
+                cityName: cityName,
+            },
+            order: {
+                createdAt: 'DESC',
+            },
+        });
+    }
+
     async insert(weather: Weather): Promise<Weather> {
         return this.repository.save(weather);
     }
