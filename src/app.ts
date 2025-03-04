@@ -1,3 +1,4 @@
+import { Cache } from '@common/cache';
 import { Config } from '@common/config';
 import { Database } from '@common/database';
 import { catchMissingRoutes, errorHandler } from '@common/middlewares';
@@ -25,6 +26,10 @@ const startServer = async () => {
     await Database.initialize();
     console.log('Database connection established');
 
+    // Initialize database connection
+    await Cache.connect();
+    console.log('Cache connection established');
+
     // Middlewares
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -51,6 +56,7 @@ const startServer = async () => {
     // Shutdown hook
     process.on('exit', async () => {
         await Database.close();
+        Cache.close();
     });
 };
 
