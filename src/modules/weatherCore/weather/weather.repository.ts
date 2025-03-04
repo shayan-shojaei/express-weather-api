@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Weather } from '@domains/weatherCore/weather';
+import { Weather } from '@modules/weatherCore/weather';
 
 export class WeatherRepository {
     constructor(private readonly repository: Repository<Weather>) {}

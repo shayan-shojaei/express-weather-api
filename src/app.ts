@@ -1,7 +1,7 @@
 import { Config } from '@common/config';
 import { Database } from '@common/database';
 import { errorHandler } from '@common/middlewares';
-import { WeatherController } from '@domains/weatherCore/weather/weather.controller';
+import { WeatherController } from '@modules/weatherCore/weather/weather.controller';
 import express from 'express';
 
 const startServer = async () => {

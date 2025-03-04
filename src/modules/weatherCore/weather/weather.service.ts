@@ -1,7 +1,7 @@
 import { Database } from '@common/database';
-import { Weather } from '@domains/weatherCore/weather';
-import { WeatherRepository } from '@domains/weatherCore/weather/weather.repository';
-import { WeatherProviderService } from '@domains/weatherCore/weatherProvider/weatherProvider.service';
+import { Weather } from '@modules/weatherCore/weather';
+import { WeatherRepository } from '@modules/weatherCore/weather/weather.repository';
+import { WeatherProviderService } from '@modules/weatherCore/weatherProvider/weatherProvider.service';
 import { FetchWeatherDto } from './dto';
 
 export class WeatherService {

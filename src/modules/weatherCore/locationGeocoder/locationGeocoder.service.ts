@@ -1,6 +1,6 @@
 import { Config } from '@common/config';
 import { AxiosInstance, create } from 'axios';
-import { LocationInfo } from '@domains/weatherCore/locationGeocoder';
+import { LocationInfo } from '@modules/weatherCore/locationGeocoder';
 
 export class LocationGeocoderService {
     private readonly axios: AxiosInstance;

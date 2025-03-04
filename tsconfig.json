@@ -24,8 +24,8 @@
       "@common/*": [
         "src/common/*"
       ],
-      "@domains/*": [
-        "src/domains/*"
+      "@modules/*": [
+        "src/modules/*"
       ]
     },
     "plugins": [

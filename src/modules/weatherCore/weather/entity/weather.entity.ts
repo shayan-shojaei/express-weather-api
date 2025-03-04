@@ -1,4 +1,4 @@
-import { WeatherInfo } from '@domains/weatherCore/weatherProvider';
+import { WeatherInfo } from '@modules/weatherCore/weatherProvider';
 import {
     Column,
     CreateDateColumn,

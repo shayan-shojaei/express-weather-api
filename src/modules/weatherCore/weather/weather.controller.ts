@@ -1,5 +1,5 @@
 import { handleRoute } from '@common/helpers';
-import { WeatherService } from '@domains/weatherCore/weather/weather.service';
+import { WeatherService } from '@modules/weatherCore/weather/weather.service';
 import { NextFunction, Request, Response, Router } from 'express';
 import { FetchWeatherDto } from './dto';
 

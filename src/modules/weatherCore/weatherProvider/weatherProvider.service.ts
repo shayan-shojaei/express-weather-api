@@ -1,10 +1,10 @@
 import { Config } from '@common/config';
 import { AxiosInstance, create } from 'axios';
-import { LocationGeocoderService } from '@domains/weatherCore/locationGeocoder/locationGeocoder.service';
+import { LocationGeocoderService } from '@modules/weatherCore/locationGeocoder/locationGeocoder.service';
 import type {
     WeatherError,
     WeatherInfo,
-} from '@domains/weatherCore/weatherProvider';
+} from '@modules/weatherCore/weatherProvider';
 
 export class WeatherProviderService {
     private readonly axios: AxiosInstance;
