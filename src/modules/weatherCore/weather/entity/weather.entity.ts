@@ -30,7 +30,11 @@ export class Weather {
     @Column({ name: 'wind_speed', type: 'float' })
     windSpeed: number;
 
-    @Column({ name: 'fetched_at', type: 'timestamp' })
+    @Column({
+        name: 'fetched_at',
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP',
+    })
     fetchedAt: Date;
 
     @CreateDateColumn({
@@ -59,7 +63,6 @@ export class Weather {
             temperature: weatherInfo.main.temp,
             humidity: weatherInfo.main.humidity,
             windSpeed: weatherInfo.wind.speed,
-            fetchedAt: new Date(),
         });
     }
 }
