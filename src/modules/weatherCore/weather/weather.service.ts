@@ -2,7 +2,11 @@ import { Database } from '@common/database';
 import { Weather } from '@modules/weatherCore/weather';
 import { WeatherRepository } from '@modules/weatherCore/weather/weather.repository';
 import { WeatherProviderService } from '@modules/weatherCore/weatherProvider/weatherProvider.service';
-import { FetchWeatherDto, FindWeatherRecordsDto } from './dto';
+import {
+    FetchWeatherDto,
+    FindWeatherRecordsDto,
+    UpdateWeatherRecordDto,
+} from './dto';
 import { isUUID } from 'class-validator';
 import { NotFoundException } from '@common/exceptions';
 
@@ -47,5 +51,26 @@ export class WeatherService {
         );
 
         return this.weatherRepository.insert(weather);
+    }
+
+    async updateOneById(
+        id: string,
+        updateWeatherRecordDto: UpdateWeatherRecordDto,
+    ): Promise<Weather> {
+        if (!isUUID(id)) {
+            throw new NotFoundException();
+        }
+
+        const updatedWeatherRecord =
+            await this.weatherRepository.findOneAndUpdate(
+                id,
+                updateWeatherRecordDto,
+            );
+
+        if (!updatedWeatherRecord) {
+            throw new NotFoundException();
+        }
+
+        return updatedWeatherRecord;
     }
 }

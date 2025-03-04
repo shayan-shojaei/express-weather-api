@@ -23,4 +23,22 @@ export class WeatherRepository {
     async insert(weather: Weather): Promise<Weather> {
         return this.repository.save(weather);
     }
+
+    async findOneAndUpdate(
+        id: string,
+        weather: Partial<Weather>,
+    ): Promise<Weather> {
+        return (
+            await this.repository
+                .createQueryBuilder()
+                .update({
+                    ...weather,
+                })
+                .where({
+                    id: id,
+                })
+                .returning('*')
+                .execute()
+        ).raw[0];
+    }
 }

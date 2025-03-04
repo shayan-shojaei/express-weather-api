@@ -1,7 +1,11 @@
 import { handleRoute } from '@common/helpers';
 import { WeatherService } from '@modules/weatherCore/weather/weather.service';
 import { NextFunction, Request, Response, Router } from 'express';
-import { FetchWeatherDto, FindWeatherRecordsDto } from './dto';
+import {
+    FetchWeatherDto,
+    FindWeatherRecordsDto,
+    UpdateWeatherRecordDto,
+} from './dto';
 import { HttpStatus } from '@common/enums';
 
 export const WeatherController = () => {
@@ -52,6 +56,27 @@ export const WeatherController = () => {
             },
             {
                 body: FetchWeatherDto,
+            },
+        ),
+    );
+
+    router.put(
+        '/:id',
+        handleRoute(
+            async (req: Request, res: Response, next: NextFunction) => {
+                const id = req.params.id;
+                const updateWeatherRecordDto =
+                    req.body as UpdateWeatherRecordDto;
+
+                const updatedWeatherRecord = await weatherService.updateOneById(
+                    id,
+                    updateWeatherRecordDto,
+                );
+
+                res.status(HttpStatus.OK).send(updatedWeatherRecord);
+            },
+            {
+                body: UpdateWeatherRecordDto,
             },
         ),
     );
