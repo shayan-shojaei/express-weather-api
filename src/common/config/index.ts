@@ -27,6 +27,7 @@ export const Config = {
         PORT: +process.env.REDIS_PORT || 6379,
         USERNAME: process.env.REDIS_USERNAME,
         PASSWORD: process.env.REDIS_PASSWORD,
+        TTL: +process.env.REDIS_EXPIRATION || 60,
     },
     OpenWeatherMap: {
         GEOCODING_API_URL: process.env.OPENWEATHERMAP_GEOCODING_API_URL,

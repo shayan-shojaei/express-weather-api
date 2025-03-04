@@ -1,4 +1,5 @@
 import { WeatherInfo } from '@modules/weatherCore/weatherProvider';
+import { DateTime } from 'luxon';
 import {
     Column,
     CreateDateColumn,
@@ -32,18 +33,19 @@ export class Weather {
 
     @Column({
         name: 'fetched_at',
-        type: 'timestamp',
+        type: 'timestamptz',
         default: () => 'CURRENT_TIMESTAMP',
     })
     fetchedAt: Date;
 
     @CreateDateColumn({
         name: 'created_at',
+        type: 'timestamptz',
     })
     createdAt: Date;
 
-    @UpdateDateColumn({ name: 'updated_at' })
-    updatedAt?: Date;
+    @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+    updatedAt: Date;
 
     constructor(data: Partial<Weather>) {
         if (data) {
@@ -55,6 +57,7 @@ export class Weather {
         country: string,
         cityName: string,
         weatherInfo: WeatherInfo,
+        fetchedAt?: Date,
     ): Weather {
         return new Weather({
             cityName: cityName,
@@ -63,6 +66,7 @@ export class Weather {
             temperature: weatherInfo.main.temp,
             humidity: weatherInfo.main.humidity,
             windSpeed: weatherInfo.wind.speed,
+            fetchedAt: fetchedAt || new Date(),
         });
     }
 }
