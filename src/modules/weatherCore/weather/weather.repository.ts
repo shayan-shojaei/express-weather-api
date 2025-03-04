@@ -39,18 +39,14 @@ export class WeatherRepository {
         id: string,
         weather: Partial<Weather>,
     ): Promise<Weather> {
-        return (
-            await this.repository
-                .createQueryBuilder()
-                .update({
-                    ...weather,
-                })
-                .where({
-                    id: id,
-                })
-                .returning('*')
-                .execute()
-        ).raw[0];
+        await this.repository.update(
+            { id: id },
+            {
+                ...weather,
+            },
+        );
+
+        return this.repository.findOneBy({ id: id });
     }
 
     async deleteOneById(id: string): Promise<boolean> {
