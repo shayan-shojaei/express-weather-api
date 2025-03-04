@@ -1,6 +1,6 @@
 import { Config } from '@common/config';
 import { Database } from '@common/database';
-import { errorHandler } from '@common/middlewares';
+import { catchMissingRoutes, errorHandler } from '@common/middlewares';
 import { WeatherController } from '@modules/weatherCore/weather/weather.controller';
 import express from 'express';
 
@@ -20,6 +20,7 @@ const startServer = async () => {
 
     // Error handler
     app.use(errorHandler);
+    app.use(catchMissingRoutes);
 
     // Start server
     app.listen(Config.Server.PORT, async (error?: Error) => {
