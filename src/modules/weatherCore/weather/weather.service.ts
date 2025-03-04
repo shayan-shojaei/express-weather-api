@@ -73,4 +73,18 @@ export class WeatherService {
 
         return updatedWeatherRecord;
     }
+
+    async deleteOneById(id: string): Promise<void> {
+        if (!isUUID(id)) {
+            throw new NotFoundException();
+        }
+
+        // Note: Could use soft-delete instead of hard-delete
+        // here, based on business requirements.
+        const deleted = await this.weatherRepository.deleteOneById(id);
+
+        if (!deleted) {
+            throw new NotFoundException();
+        }
+    }
 }

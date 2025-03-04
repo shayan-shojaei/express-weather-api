@@ -41,4 +41,9 @@ export class WeatherRepository {
                 .execute()
         ).raw[0];
     }
+
+    async deleteOneById(id: string): Promise<boolean> {
+        const result = await this.repository.delete({ id: id });
+        return result.affected === 1;
+    }
 }
