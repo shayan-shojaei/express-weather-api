@@ -22,6 +22,7 @@ export class WeatherProviderService {
             baseURL: Config.OpenWeatherMap.API_URL,
             params: {
                 appId: Config.OpenWeatherMap.API_KEY,
+                units: 'metric',
             },
         });
         this.redis = Cache.getClient();
