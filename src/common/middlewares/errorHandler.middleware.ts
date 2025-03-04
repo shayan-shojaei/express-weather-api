@@ -7,7 +7,7 @@ export const errorHandler = (
     res: Response,
     next: NextFunction,
 ) => {
-    console.log(err);
+    console.error(err);
 
     if (err instanceof HttpException) {
         const { status, ...error } = err;
@@ -16,5 +16,6 @@ export const errorHandler = (
         console.error(err);
         res.status(500).json({ message: 'Internal Server Error' });
     }
+
     next();
 };
