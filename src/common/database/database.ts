@@ -1,4 +1,5 @@
 import { Config } from '@common/config';
+import path from 'path';
 import { DataSource, EntityTarget, Repository } from 'typeorm';
 
 export class Database {
@@ -16,7 +17,7 @@ export class Database {
             username: Config.Database.USERNAME,
             password: Config.Database.PASSWORD,
             database: Config.Database.DATABASE,
-            entities: [__dirname + '/**/*.entity.ts'],
+            entities: [path.join(__dirname, '../../**/*.entity.{ts,js}')],
             synchronize: true,
         });
 
