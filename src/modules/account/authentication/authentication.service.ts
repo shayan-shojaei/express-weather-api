@@ -3,7 +3,7 @@ import { UserService } from '../user/user.service';
 import { LoginDto, SignupDto } from './dto';
 import { BcryptHelper } from '@common/helpers';
 import { User } from '../user';
-import { JWTPayload } from './types';
+import { UserJWTPayload } from './types';
 import { JWTHelper } from '@app/common/helpers/jwt.helper';
 
 export class AuthenticationService {
@@ -52,7 +52,7 @@ export class AuthenticationService {
     }
 
     private async generateToken(user: User): Promise<string> {
-        const payload: JWTPayload = {
+        const payload: UserJWTPayload = {
             id: user.id,
             email: user.email,
         };

@@ -14,6 +14,10 @@ export class UserRepository {
         });
     }
 
+    async findOneById(id: string): Promise<User> {
+        return this.repository.findOneBy({ id: id });
+    }
+
     async create(signupDto: SignupDto): Promise<User> {
         return this.repository.save(signupDto);
     }
