@@ -1,5 +1,6 @@
 import { Config } from '@common/config';
-import { AxiosInstance, create } from 'axios';
+import axios from 'axios';
+import type { AxiosInstance } from 'axios';
 import { LocationInfo } from '@modules/weatherCore/locationGeocoder';
 import Redis from 'ioredis';
 import { Cache } from '@common/cache';
@@ -9,7 +10,7 @@ export class LocationGeocoderService {
     private readonly redis: Redis;
 
     constructor() {
-        this.axios = create({
+        this.axios = axios.create({
             baseURL: Config.OpenWeatherMap.GEOCODING_API_URL,
             params: {
                 appId: Config.OpenWeatherMap.API_KEY,

@@ -16,7 +16,7 @@ export class Database {
             username: Config.Database.USERNAME,
             password: Config.Database.PASSWORD,
             database: Config.Database.DATABASE,
-            entities: ['src/**/*.entity.ts'],
+            entities: [__dirname + '/**/*.entity.ts'],
             synchronize: true,
         });
 

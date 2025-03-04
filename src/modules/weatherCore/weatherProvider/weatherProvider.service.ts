@@ -1,5 +1,6 @@
 import { Config } from '@common/config';
-import { AxiosInstance, create } from 'axios';
+import axios from 'axios';
+import type { AxiosInstance } from 'axios';
 import { LocationGeocoderService } from '@modules/weatherCore/locationGeocoder/locationGeocoder.service';
 import type {
     WeatherError,
@@ -17,7 +18,7 @@ export class WeatherProviderService {
     private readonly redis: Redis;
 
     constructor() {
-        this.axios = create({
+        this.axios = axios.create({
             baseURL: Config.OpenWeatherMap.API_URL,
             params: {
                 appId: Config.OpenWeatherMap.API_KEY,
