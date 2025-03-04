@@ -2,6 +2,7 @@ import { handleRoute } from '@common/helpers';
 import { WeatherService } from '@modules/weatherCore/weather/weather.service';
 import { NextFunction, Request, Response, Router } from 'express';
 import { FetchWeatherDto, FindWeatherRecordsDto } from './dto';
+import { HttpStatus } from '@common/enums';
 
 export const WeatherController = () => {
     const router = Router();
@@ -19,7 +20,7 @@ export const WeatherController = () => {
                     findWeatherRecordsDto,
                 );
 
-                res.status(200).send(weatherRecords);
+                res.status(HttpStatus.OK).send(weatherRecords);
             },
             {
                 query: FindWeatherRecordsDto,
@@ -34,7 +35,7 @@ export const WeatherController = () => {
 
             const weatherRecord = await weatherService.findOneById(id);
 
-            res.status(200).send(weatherRecord);
+            res.status(HttpStatus.OK).send(weatherRecord);
         }),
     );
 
@@ -47,7 +48,7 @@ export const WeatherController = () => {
                 const weather =
                     await weatherService.fetchWeather(fetchWeatherDto);
 
-                res.status(201).send(weather);
+                res.status(HttpStatus.CREATED).send(weather);
             },
             {
                 body: FetchWeatherDto,
