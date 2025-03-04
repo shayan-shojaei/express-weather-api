@@ -18,7 +18,7 @@ export class Database {
             password: Config.Database.PASSWORD,
             database: Config.Database.DATABASE,
             entities: [path.join(__dirname, '../../**/*.entity.{ts,js}')],
-            synchronize: true,
+            synchronize: !Config.Environment.IS_PRODUCTION,
         });
 
         await Database.datasource.initialize();

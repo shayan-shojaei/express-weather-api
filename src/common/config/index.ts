@@ -5,11 +5,7 @@ export const Config = {
         PORT: +process.env.PORT || 3000,
     },
     Environment: {
-        NAME: (process.env.NODE_ENV || 'development') as
-            | 'development'
-            | 'production'
-            | 'local'
-            | 'test',
+        NAME: process.env.NODE_ENV || 'development',
         IS_PRODUCTION: process.env.NODE_ENV === 'production',
         IS_DEVELOPMENT: process.env.NODE_ENV === 'development',
         IS_LOCAL: process.env.NODE_ENV === 'local',
@@ -27,11 +23,21 @@ export const Config = {
         PORT: +process.env.REDIS_PORT || 6379,
         USERNAME: process.env.REDIS_USERNAME,
         PASSWORD: process.env.REDIS_PASSWORD,
+        /**
+         * The expiry time of the Redis cache in seconds
+         */
         TTL: +process.env.REDIS_EXPIRATION || 60,
     },
     OpenWeatherMap: {
         GEOCODING_API_URL: process.env.OPENWEATHERMAP_GEOCODING_API_URL,
         API_URL: process.env.OPENWEATHERMAP_API_URL,
         API_KEY: process.env.OPENWEATHERMAP_API_KEY,
+    },
+    JWT: {
+        SECRET: process.env.JWT_SECRET,
+        /**
+         * The expiry time of the JWT token in days
+         */
+        EXPIRATION: +process.env.JWT_EXPIRATION || 7,
     },
 };

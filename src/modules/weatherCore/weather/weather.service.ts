@@ -11,12 +11,12 @@ import { isUUID } from 'class-validator';
 import { BadRequestException, NotFoundException } from '@common/exceptions';
 
 export class WeatherService {
-    constructor() {}
-
     private readonly weatherRepository = new WeatherRepository(
         Database.getRepository(Weather),
     );
     private readonly weatherProvider = new WeatherProviderService();
+
+    constructor() {}
 
     async findAll(
         findWeatherRecordsDto: FindWeatherRecordsDto,
