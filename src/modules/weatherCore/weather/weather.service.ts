@@ -2,7 +2,9 @@ import { Database } from '@common/database';
 import { Weather } from '@modules/weatherCore/weather';
 import { WeatherRepository } from '@modules/weatherCore/weather/weather.repository';
 import { WeatherProviderService } from '@modules/weatherCore/weatherProvider/weatherProvider.service';
-import { FetchWeatherDto } from './dto';
+import { FetchWeatherDto, FindWeatherRecordsDto } from './dto';
+import { isUUID } from 'class-validator';
+import { NotFoundException } from '@common/exceptions';
 
 export class WeatherService {
     constructor() {}
@@ -12,10 +14,24 @@ export class WeatherService {
     );
     private readonly weatherProvider = new WeatherProviderService();
 
-    async findAll(): Promise<Weather[]> {
-        await this.weatherProvider.getWeather('GB', 'London');
+    async findAll(
+        findWeatherRecordsDto: FindWeatherRecordsDto,
+    ): Promise<Weather[]> {
+        return this.weatherRepository.findAll(findWeatherRecordsDto);
+    }
 
-        return this.weatherRepository.findAll();
+    async findOneById(id: string): Promise<Weather> {
+        if (!isUUID(id)) {
+            throw new NotFoundException();
+        }
+
+        const weatherRecord = await this.weatherRepository.findOneById(id);
+
+        if (!weatherRecord) {
+            throw new NotFoundException();
+        }
+
+        return weatherRecord;
     }
 
     async fetchWeather(fetchWeatherDto: FetchWeatherDto): Promise<Weather> {
