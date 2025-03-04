@@ -1,7 +1,7 @@
 import { ClassConstructor } from 'class-transformer';
 import { NextFunction, Request, Response } from 'express';
 import { ValidationHelper } from './validation.helper';
-import { QueryParams } from '@common/types';
+import type { QueryParams } from '@common/types';
 
 export type HandleRouteOptions<
     BodyType extends object,
