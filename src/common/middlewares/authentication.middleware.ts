@@ -8,7 +8,9 @@ export const authentication = (
     res: Response,
     next: NextFunction,
 ) => {
-    const token = req.headers['authorization']?.replace('Bearer ', '');
+    const headerValue = (req.headers['authorization'] ||
+        req.headers['x-authorization']) as string;
+    const token = headerValue?.replace('Bearer ', '');
 
     if (!token) {
         throw new UnauthorizedException();
