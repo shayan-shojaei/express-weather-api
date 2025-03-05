@@ -8,7 +8,10 @@ import {
 } from '@common/middlewares';
 import { AccountController } from '@modules/account/account.controller';
 import { WeatherController } from '@modules/weatherCore/weather/weather.controller';
+import compression from 'compression';
+import cors from 'cors';
 import express from 'express';
+import helmet from 'helmet';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
@@ -44,6 +47,13 @@ export const startServer = async () => {
     console.log('Cache connection established');
 
     // Middlewares
+    app.use(
+        cors({
+            origin: '*',
+        }),
+    );
+    app.use(compression());
+    app.use(helmet());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(transformResponse);
