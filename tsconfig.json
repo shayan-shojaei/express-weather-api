@@ -45,6 +45,7 @@
     "node_modules"
   ],
   "ts-node": {
-    "transpileOnly": false
+    "transpileOnly": false,
+    "files": true
   }
 }

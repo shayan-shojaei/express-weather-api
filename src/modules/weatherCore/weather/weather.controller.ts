@@ -166,8 +166,9 @@ export const WeatherController = () => {
      *       404:
      *         description: Weather data not found
      */
-    router.use(authentication).post(
+    router.post(
         '/',
+        authentication,
         handleRoute(
             async (req, res) => {
                 const fetchWeatherDto = req.body;
@@ -215,8 +216,9 @@ export const WeatherController = () => {
      *       404:
      *         description: Weather record not found
      */
-    router.use(authentication).put(
+    router.put(
         '/:id',
+        authentication,
         handleRoute(
             async (req, res, next) => {
                 const id = req.params.id;
@@ -260,8 +262,9 @@ export const WeatherController = () => {
      *       404:
      *         description: Weather record not found
      */
-    router.use(authentication).delete(
+    router.delete(
         '/:id',
+        authentication,
         handleRoute(async (req: Request, res: Response, next: NextFunction) => {
             const id = req.params.id;
 

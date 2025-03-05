@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "./src/app.ts",
   "scripts": {
-    "start:dev": "ts-node-dev --compiler ts-patch/compiler ./src/app.ts",
+    "start:dev": "ts-node-dev --compiler ts-patch/compiler --files ./src/app.ts",
     "start": "npm run build && npm run start:prod",
     "start:prod": "node ./dist/app.js",
     "build": "rimraf ./dist && tspc -p ./tsconfig.build.json",

@@ -29,9 +29,12 @@ export const UserController = () => {
      *       401:
      *        description: Unauthorized
      */
-    router.use(authentication).get(
+    router.get(
         '/me',
+        authentication,
         handleRoute(async (req, res) => {
+            console.log(req.user);
+
             const user = await userService.findOneById(req.user.id);
 
             return res.status(HttpStatus.OK).transformAndSend(user, UserDto);

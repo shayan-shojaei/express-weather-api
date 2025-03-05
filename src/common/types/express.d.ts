@@ -1,6 +1,5 @@
-import { JWTPayload } from '@app/modules/account/authentication';
+import { JWTPayload } from '@modules/account/authentication';
 import { ClassConstructor } from 'class-transformer';
-import * as express from 'express';
 
 declare global {
     namespace Express {

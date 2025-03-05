@@ -1,9 +1,6 @@
 import { ClassConstructor } from 'class-transformer';
 import { NextFunction, Request, Response } from 'express';
 import { ValidationHelper } from './validation.helper';
-import type { QueryParams } from '@common/types';
-import { HttpStatus } from '../enums';
-import { UnauthorizedException } from '../exceptions';
 
 export type HandleRouteOptions<
     BodyType extends object,
@@ -11,7 +8,6 @@ export type HandleRouteOptions<
 > = {
     body?: ClassConstructor<BodyType>;
     query?: ClassConstructor<QueryType>;
-    authenticated?: boolean;
 };
 
 /**
@@ -54,17 +50,10 @@ export const handleRoute = <
                 );
             }
 
-            if (options?.authenticated) {
-                if (!req.user) {
-                    throw new UnauthorizedException();
-                }
-            }
-
             await func(req, res, next);
+            next();
         } catch (error) {
             next(error);
-        } finally {
-            next();
         }
     };
 };
