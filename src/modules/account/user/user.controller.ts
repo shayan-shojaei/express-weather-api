@@ -33,8 +33,6 @@ export const UserController = () => {
         '/me',
         authentication,
         handleRoute(async (req, res) => {
-            console.log(req.user);
-
             const user = await userService.findOneById(req.user.id);
 
             return res.status(HttpStatus.OK).transformAndSend(user, UserDto);
