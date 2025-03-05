@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+    app:
+        build: .
+        container_name: weather_app
+        restart: always
+        depends_on:
+            - postgres
+            - redis
+        env_file:
+            - .env
+        environment:
+            PGSQL_HOST: weather_db
+            REDIS_HOST: weather_cache
+        ports:
+            - '3000:3000'
+        networks:
+            - weather_network
+
+    postgres:
+        image: postgres:17-alpine
+        container_name: weather_db
+        restart: always
+        env_file:
+            - .env
+        environment:
+            POSTGRES_USER: ${PGSQL_USERNAME}
+            POSTGRES_PASSWORD: ${PGSQL_PASSWORD}
+            POSTGRES_DB: ${PGSQL_DATABASE}
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - weather_network
+
+    redis:
+        image: redis:7-alpine
+        container_name: weather_cache
+        command: >
+            --user ${REDIS_USER} on >${REDIS_PASSWORD} on allcommands allkeys
+            --user default off
+        restart: always
+        volumes:
+            - redis_data:/data
+        networks:
+            - weather_network
+
+networks:
+    weather_network:
+        driver: bridge
+
+volumes:
+    postgres_data:
+    redis_data:
