@@ -1,9 +1,9 @@
-import { Config } from '@common/config';
-import axios from 'axios';
-import type { AxiosInstance } from 'axios';
-import { LocationInfo } from '@modules/weatherCore/locationGeocoder';
-import Redis from 'ioredis';
 import { Cache } from '@common/cache';
+import { Config } from '@common/config';
+import { LocationInfo } from '@modules/weatherCore/locationGeocoder';
+import type { AxiosInstance } from 'axios';
+import axios from 'axios';
+import Redis from 'ioredis';
 
 export class LocationGeocoderService {
     private readonly axios: AxiosInstance;

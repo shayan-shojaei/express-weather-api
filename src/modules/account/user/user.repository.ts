@@ -1,6 +1,6 @@
 import { Database } from '@common/database';
-import { User } from './entity';
 import { SignupDto } from '../authentication/dto';
+import { User } from './entity';
 
 export class UserRepository {
     private readonly repository = Database.getRepository(User);

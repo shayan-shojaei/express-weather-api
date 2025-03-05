@@ -1,12 +1,12 @@
 import { startServer } from '@app/app';
-import request from 'supertest';
+import { HttpStatus } from '@common/enums';
 import {
     FetchWeatherDto,
     UpdateWeatherRecordDto,
     WeatherRecordDto,
 } from '@modules/weatherCore/weather/dto';
-import { HttpStatus } from '@common/enums';
 import { Server } from 'http';
+import request from 'supertest';
 
 describe('Weather', () => {
     let app: Server;

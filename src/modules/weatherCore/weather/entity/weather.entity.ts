@@ -1,5 +1,4 @@
 import { WeatherInfo } from '@modules/weatherCore/weatherProvider';
-import { DateTime } from 'luxon';
 import {
     Column,
     CreateDateColumn,

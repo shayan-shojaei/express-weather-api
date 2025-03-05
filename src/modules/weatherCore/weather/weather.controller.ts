@@ -1,14 +1,14 @@
+import { HttpStatus } from '@common/enums';
 import { handleRoute } from '@common/helpers';
-import { WeatherService } from '@modules/weatherCore/weather/weather.service';
-import { NextFunction, Request, Response, Router } from 'express';
+import { authentication } from '@common/middlewares';
 import {
     FetchWeatherDto,
     FindWeatherRecordsDto,
     UpdateWeatherRecordDto,
     WeatherRecordDto,
-} from './dto';
-import { HttpStatus } from '@common/enums';
-import { authentication } from '@app/common/middlewares';
+} from '@modules/weatherCore/weather';
+import { WeatherService } from '@modules/weatherCore/weather/weather.service';
+import { NextFunction, Request, Response, Router } from 'express';
 
 export const WeatherController = () => {
     const router = Router();

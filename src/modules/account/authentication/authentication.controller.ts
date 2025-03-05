@@ -1,8 +1,12 @@
-import { Router } from 'express';
-import { AuthenticationService } from './authentication.service';
-import { handleRoute } from '@common/helpers';
-import { AuthenticationResponseDto, LoginDto, SignupDto } from './dto';
 import { HttpStatus } from '@common/enums';
+import { handleRoute } from '@common/helpers';
+import {
+    AuthenticationResponseDto,
+    LoginDto,
+    SignupDto,
+} from '@modules/account/authentication';
+import { AuthenticationService } from '@modules/account/authentication/authentication.service';
+import { Router } from 'express';
 
 export const AuthenticationController = () => {
     const router = Router();

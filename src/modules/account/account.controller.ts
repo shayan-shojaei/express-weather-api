@@ -1,6 +1,6 @@
+import { AuthenticationController } from '@modules/account/authentication/authentication.controller';
+import { UserController } from '@modules/account/user/user.controller';
 import { Router } from 'express';
-import { AuthenticationController } from './authentication/authentication.controller';
-import { UserController } from './user/user.controller';
 
 export const AccountController = () => {
     const router = Router();

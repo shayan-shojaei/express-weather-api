@@ -1,10 +1,10 @@
+import { JWTHelper } from '@app/common/helpers/jwt.helper';
 import { BadRequestException } from '@common/exceptions';
-import { UserService } from '../user/user.service';
-import { LoginDto, SignupDto } from './dto';
 import { BcryptHelper } from '@common/helpers';
 import { User } from '../user';
+import { UserService } from '../user/user.service';
+import { LoginDto, SignupDto } from './dto';
 import { UserJWTPayload } from './types';
-import { JWTHelper } from '@app/common/helpers/jwt.helper';
 
 export class AuthenticationService {
     private readonly userService = new UserService();

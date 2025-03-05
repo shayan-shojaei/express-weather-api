@@ -1,13 +1,16 @@
 import { Cache } from '@common/cache';
 import { Config } from '@common/config';
 import { Database } from '@common/database';
-import { catchMissingRoutes, errorHandler } from '@common/middlewares';
+import {
+    catchMissingRoutes,
+    errorHandler,
+    transformResponse,
+} from '@common/middlewares';
+import { AccountController } from '@modules/account/account.controller';
 import { WeatherController } from '@modules/weatherCore/weather/weather.controller';
 import express from 'express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { transformResponse } from './common/middlewares/transformResponse.middleware';
-import { AccountController } from './modules/account/account.controller';
 
 const swaggerSpecs = swaggerJSDoc({
     apis: ['src/modules/**/*.controller.ts', 'src/**/*.dto.ts'],

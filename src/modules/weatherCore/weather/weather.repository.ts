@@ -1,6 +1,5 @@
+import { FindWeatherRecordsDto, Weather } from '@modules/weatherCore/weather';
 import { Repository } from 'typeorm';
-import { Weather } from '@modules/weatherCore/weather';
-import { FindWeatherRecordsDto } from './dto';
 
 export class WeatherRepository {
     constructor(private readonly repository: Repository<Weather>) {}

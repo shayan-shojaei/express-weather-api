@@ -1,7 +1,7 @@
 import 'tsconfig-paths/register';
 
-import { BcryptHelper } from '../src/common/helpers';
 import { Database } from '../src/common/database';
+import { BcryptHelper } from '../src/common/helpers';
 import { User } from '../src/modules/account/user';
 
 export default async function globalSetup() {

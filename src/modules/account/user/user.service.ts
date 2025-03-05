@@ -1,6 +1,6 @@
-import { SignupDto } from '../authentication/dto';
-import { User } from './entity';
-import { UserRepository } from './user.repository';
+import { SignupDto } from '@modules/account/authentication';
+import { User } from '@modules/account/user';
+import { UserRepository } from '@modules/account/user/user.repository';
 
 export class UserService {
     private readonly userRepository = new UserRepository();

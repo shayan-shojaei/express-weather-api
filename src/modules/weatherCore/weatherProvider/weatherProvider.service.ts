@@ -1,16 +1,16 @@
+import { Cache } from '@common/cache';
 import { Config } from '@common/config';
-import axios from 'axios';
-import type { AxiosInstance } from 'axios';
+import { BadRequestException, NotFoundException } from '@common/exceptions';
+import { LocationInfo } from '@modules/weatherCore/locationGeocoder';
 import { LocationGeocoderService } from '@modules/weatherCore/locationGeocoder/locationGeocoder.service';
 import type {
+    CachedWeather,
     WeatherError,
     WeatherInfo,
 } from '@modules/weatherCore/weatherProvider';
+import type { AxiosInstance } from 'axios';
+import axios from 'axios';
 import Redis from 'ioredis';
-import { Cache } from '@common/cache';
-import { BadRequestException, NotFoundException } from '@common/exceptions';
-import { LocationInfo } from '../locationGeocoder';
-import { CachedWeather } from './types/cachedWeather.type';
 
 export class WeatherProviderService {
     private readonly axios: AxiosInstance;

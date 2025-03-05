@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { handleRoute } from '@common/helpers';
 import { HttpStatus } from '@common/enums';
-import { UserService } from './user.service';
+import { handleRoute } from '@common/helpers';
 import { authentication } from '@common/middlewares';
-import { UserDto } from './dto';
+import { UserDto } from '@modules/account/user';
+import { UserService } from '@modules/account/user/user.service';
+import { Router } from 'express';
 
 export const UserController = () => {
     const router = Router();

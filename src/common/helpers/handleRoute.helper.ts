@@ -1,6 +1,6 @@
+import { ValidationHelper } from '@common/helpers';
 import { ClassConstructor } from 'class-transformer';
 import { NextFunction, Request, Response } from 'express';
-import { ValidationHelper } from './validation.helper';
 
 export type HandleRouteOptions<
     BodyType extends object,

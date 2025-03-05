@@ -1,7 +1,7 @@
+import { UnauthorizedException } from '@common/exceptions';
+import { JWTHelper } from '@common/helpers';
+import { UserJWTPayload } from '@modules/account/authentication';
 import { NextFunction, Request, Response } from 'express';
-import { UnauthorizedException } from '../exceptions';
-import { JWTHelper } from '../helpers/jwt.helper';
-import { UserJWTPayload } from '@app/modules/account/authentication';
 
 export const authentication = (
     req: Request,
